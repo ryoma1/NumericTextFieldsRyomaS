@@ -16,6 +16,7 @@ display.setDefault("background", 255/255, 140/255, 140/255)
 
 local questionObject
 local correctObject
+local incorrectObject
 local numericField
 local randomNumber1
 local randomNumber2
@@ -26,8 +27,8 @@ local correctAnswer
 
 local function AskQuestion()
 	--generate 2 random numbers between a max. and a min. number
-	randomNumber1 = math.random(0, 10)
-	randomNumber2 = math.random(0, 10)
+	randomNumber1 = math.random(-5, 15)
+	randomNumber2 = math.random(0, 50)
 
 	correctAnswer = randomNumber1 + randomNumber2
 
@@ -39,6 +40,7 @@ end
 
 local function HideCorrect()
 	correctObject.isVisible = false
+	incorrectObject.isVisible = false
 	AskQuestion()
 end
 
@@ -59,10 +61,15 @@ local function NumericFieldListener( event )
 			if (userAnswer == correctAnswer) then
 				correctObject.isVisible = true
 				timer.performWithDelay(2000, HideCorrect)
+			
+			elseif (userAnswer ~= correctAnswer) then
+				incorrectObject.isVisible = true
+				timer.performWithDelay(2000, HideIncorrect)
 
-			end
 		end
 	end
+end
+
 
 	--Object creation
 
@@ -71,12 +78,17 @@ local function NumericFieldListener( event )
 	questionObject:setTextColor(255/255, 255/255, 0/255)
 
 	--create the correct text object and make it invisible
-	correctObject = display.newText( "Correct!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
+	correctObject = display.newText( "Correct!", display.contentWidth/2, display.contentHeight/3, nil, 50 )
 	correctObject:setTextColor(38/255, 90/255, 200/255)
 	correctObject.isVisible = false
 
+	--create the incorrect text object and make it invisible
+	incorrectObject = display.newText( "Incorrect!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
+	incorrectObject:setTextColor(100/255, 255/255, 10/255)
+	incorrectObject.isVisible = false
+
 --create numeric field
-numericField = native.newTextField( display.contentWidth/2, display.contentHeight/2, 150, 80 )
+numericField = native.newTextField( display.contentWidth/2.1, display.contentHeight/2, 100, 80 )
 numericField.inputType = "number"
 
 --add the event listener for the numeric field
