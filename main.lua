@@ -27,7 +27,7 @@ local correctAnswer
 
 local function AskQuestion()
 	--generate 2 random numbers between a max. and a min. number
-	randomNumber1 = math.random(-5, 15)
+	randomNumber1 = math.random(-10, 15)
 	randomNumber2 = math.random(0, 50)
 
 	correctAnswer = randomNumber1 + randomNumber2
@@ -49,8 +49,6 @@ local function NumericFieldListener( event )
 	--User begins editing "numericField"
 	if ( event.phase == "began" ) then
 
-		--clear text field
-		event.target.text = ""
 
 		elseif event.phase == "submitted" then
 
@@ -61,10 +59,12 @@ local function NumericFieldListener( event )
 			if (userAnswer == correctAnswer) then
 				correctObject.isVisible = true
 				timer.performWithDelay(2000, HideCorrect)
+				event.target.text = ""
 			
 			elseif (userAnswer ~= correctAnswer) then
 				incorrectObject.isVisible = true
 				timer.performWithDelay(2000, HideIncorrect)
+				event.target.text = ""
 
 		end
 	end
@@ -74,7 +74,7 @@ end
 	--Object creation
 
 	--displays a question and sets the colour
-	questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/2, nil, 50 )
+	questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/2, nil, 40 )
 	questionObject:setTextColor(255/255, 255/255, 0/255)
 
 	--create the correct text object and make it invisible
@@ -88,7 +88,7 @@ end
 	incorrectObject.isVisible = false
 
 --create numeric field
-numericField = native.newTextField( display.contentWidth/2.1, display.contentHeight/2, 100, 80 )
+numericField = native.newTextField( display.contentWidth/2.1, display.contentHeight/2, 90, 80 )
 numericField.inputType = "number"
 
 --add the event listener for the numeric field
