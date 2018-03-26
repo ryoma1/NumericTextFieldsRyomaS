@@ -20,6 +20,7 @@ local incorrectObject
 local numericField
 local randomNumber1
 local randomNumber2
+local randomOperator
 local userAnswer
 local correctAnswer
 
@@ -27,14 +28,31 @@ local correctAnswer
 
 local function AskQuestion()
 	--generate 2 random numbers between a max. and a min. number
-	randomNumber1 = math.random(-10, 15)
-	randomNumber2 = math.random(0, 50)
+	randomNumber1 = math.random(0, 15)
+	randomNumber2 = math.random(0, 30)
+	randomOperator = math.random(1,3)
 
-	correctAnswer = randomNumber1 + randomNumber2
+	-- subtraction
+	if (randomOperator == 1) then
+	correctAnswer = randomNumber1 - randomNumber2 
+	questionObject.text = randomNumber1 .. " - " .. randomNumber2 .. " = "
 
 
-	--create question in text object
-	questionObject.text = randomNumber1 .. " + " .. randomNumber2 .. " = "
+	-- multiplication
+	elseif (randomOperator == 2) then
+		correctAnswer = randomNumber1 * randomNumber2
+		questionObject.text = randomNumber1 .. " * " .. randomNumber2 .. " = "
+
+	-- addition
+	elseif (randomOperator == 3) then
+		correctAnswer = randomNumber1 + randomNumber2
+		questionObject.text = randomNumber1 .. " + " .. randomNumber2 .. " = "
+
+		
+		
+	end
+
+	
 
 end
 
